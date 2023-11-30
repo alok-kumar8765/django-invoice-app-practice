@@ -15,8 +15,8 @@ class InvoiceListView(View):
         }
 
         return render(self.request, 'invoice/invoice-list.html', context)
-    
-    def post(self, request):        
+
+    def post(self, request):
         # import pdb;pdb.set_trace()
         invoice_ids = request.POST.getlist("invoice_id")
         invoice_ids = list(map(int, invoice_ids))
@@ -33,7 +33,7 @@ class InvoiceListView(View):
 
 def createInvoice(request):
     """
-    Invoice Generator page it will have Functionality to create new invoices, 
+    Invoice Generator page it will have Functionality to create new invoices,
     this will be protected view, only admin has the authority to read and make
     changes here.
     """
@@ -45,17 +45,17 @@ def createInvoice(request):
     elif request.method == 'POST':
         formset = LineItemFormset(request.POST)
         form = InvoiceForm(request.POST)
-        
+
         if form.is_valid():
             invoice = Invoice.objects.create(customer=form.data["customer"],
                     customer_email=form.data["customer_email"],
                     billing_address = form.data["billing_address"],
                     date=form.data["date"],
-                    due_date=form.data["due_date"], 
+                    due_date=form.data["due_date"],
                     message=form.data["message"],
                     )
             # invoice.save()
-            
+
         if formset.is_valid():
             # import pdb;pdb.set_trace()
             # extract name and other data from each form and save
@@ -95,10 +95,10 @@ def view_PDF(request, id=None):
 
     context = {
         "company": {
-            "name": "Ibrahim Services",
-            "address" :"67542 Jeru, Chatsworth, CA 92145, US",
-            "phone": "(818) XXX XXXX",
-            "email": "contact@ibrahimservice.com",
+            "name": "ALOK Services",
+            "address" :"123 Scotlan, Albertino, CA 92145, US",
+            "phone": "(91) 12390 45678",
+            "email": "contact@alokservice.com",
         },
         "invoice_id": invoice.id,
         "invoice_total": invoice.total_amount,
